@@ -11,8 +11,15 @@ Route::get('/', function () {
     return redirect('/admin/dashboard');
 });
 
+// Update route dashboard di web.php
 Route::get('/admin/dashboard', function () {
-    return view('layout.app'); // Tampilan layout kosong
+    // Hitung data untuk widget
+    $totalGuru = \App\Models\User::where('role', 'guru')->count();
+    $totalSiswa = \App\Models\Student::count();
+    $totalKelas = \App\Models\SchoolClass::count();
+    $tahunAktif = \App\Models\AcademicYear::where('is_active', true)->first();
+
+    return view('/admin/dashboard', compact('totalGuru', 'totalSiswa', 'totalKelas', 'tahunAktif'));
 });
 
 // Route CRUD Guru
