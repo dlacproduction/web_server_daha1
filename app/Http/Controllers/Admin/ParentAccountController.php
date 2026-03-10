@@ -10,9 +10,19 @@ use Illuminate\Support\Facades\Hash;
 
 class ParentAccountController extends Controller
 {
-    public function index() {
-        // Hanya mengambil user dengan role ortu
-        $parents = User::where('role', 'wali_murid')->get();
+    public function index(Request $request)
+    {
+        $query = \App\Models\User::where('role', 'wali_murid');
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $parents = $query->orderBy('name', 'asc')->paginate(10);
         return view('admin.parents.index', compact('parents'));
     }
 

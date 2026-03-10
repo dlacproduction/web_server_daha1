@@ -7,6 +7,9 @@
         <form action="{{ url('/admin/teachers') }}" method="GET" class="d-inline-flex">
                 <input type="text" name="search" class="form-control form-control-sm me-2" placeholder="Cari Nama / NIP" value="{{ request('search') }}">
                 <button type="submit" class="btn btn-secondary btn-sm">Cari</button>
+                @if(request('search'))
+                    <a href="{{ url('/admin/teachers') }}" class="btn btn-outline-danger btn-sm ms-1">Reset</a>
+                @endif
             </form>
         <a href="{{ url('/admin/teachers/create') }}" class="btn btn-primary btn-sm">+ Tambah Guru</a>
     </div>
