@@ -39,8 +39,19 @@
                             <td>{{ $parent->email }}</td>
                             <td>{{ $parent->phone_number ?? '-' }}</td>
                             <td>
-                                <button class="btn btn-sm btn-warning">Edit</button>
-                                <button class="btn btn-sm btn-danger">Hapus</button>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url('/admin/parents/'.$parent->id.'/edit') }}" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    <form action="{{ url('/admin/parents/'.$parent->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus akun ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty

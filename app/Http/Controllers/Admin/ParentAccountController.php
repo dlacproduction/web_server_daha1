@@ -46,4 +46,47 @@ class ParentAccountController extends Controller
 
         return redirect('/admin/parents')->with('success', 'Akun Wali Murid berhasil dibuat');
     }
+
+    public function edit($id)
+    {
+        $parent = User::where('role', 'wali_murid')->findOrFail($id);
+        return view('admin.parents.edit', compact('parent'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $parent = User::where('role', 'wali_murid')->findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'phone_number' => 'nullable|string',
+        ], [
+            'email.unique' => 'Gagal! Email ini sudah digunakan oleh akun lain.',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+        ];
+
+        // Update password hanya jika diisi
+        if ($request->filled('password')) {
+            $request->validate(['password' => 'min:8']);
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $parent->update($data);
+
+        return redirect('/admin/parents')->with('success', 'Data akun wali murid berhasil diperbarui');
+    }
+
+    public function destroy($id)
+    {
+        $parent = User::where('role', 'wali_murid')->findOrFail($id);
+        $parent->delete();
+
+        return redirect('/admin/parents')->with('success', 'Akun wali murid berhasil dihapus');
+    }
 }

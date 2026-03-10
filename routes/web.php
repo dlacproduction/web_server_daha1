@@ -65,6 +65,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/parents', [ParentAccountController::class, 'index']);
     Route::get('/parents/create', [ParentAccountController::class, 'create']);
     Route::post('/parents', [ParentAccountController::class, 'store']);
+    Route::get('/parents/{id}/edit', [ParentAccountController::class, 'edit']);
+    Route::put('/parents/{id}', [ParentAccountController::class, 'update']);
+    Route::delete('/parents/{id}', [ParentAccountController::class, 'destroy']);
+
 });
 
 Route::get('/admin/promotions', [PromotionController::class, 'index']);
