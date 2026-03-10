@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SchoolClass;
 use App\Models\User;
-use App\Model\AcademicYear;
+use App\Models\AcademicYear;
 
 class SchoolClassController extends Controller
 {

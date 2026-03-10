@@ -20,7 +20,13 @@
 
             <div class="mb-3">
                 <label class="form-label">Email Login</label>
-                <input type="email" name="email" class="form-control" required placeholder="guru@sekolah.com">
+                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required placeholder="guru@sekolah.com">
+
+                @error('email')
+                    <div class="invalid-feedback fw-bold">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
 
             <div class="mb-3">

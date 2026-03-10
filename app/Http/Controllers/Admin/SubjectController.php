@@ -21,8 +21,16 @@ class SubjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|string|max:100']);
-        Subject::create($request->all());
-        return redirect('/admin/subjects')->with('success', 'Mata Pelajaran berhasil ditambah!');
+        // Validasi data terlebih dahulu
+        $request->validate([
+            'name' => 'required|string|max:100',
+        ]);
+
+        // Hanya ambil field yang dibutuhkan database
+        \App\Models\Subject::create([
+            'name' => $request->name
+        ]);
+
+        return redirect('/admin/subjects')->with('success', 'Mata Pelajaran berhasil ditambahkan');
     }
 }

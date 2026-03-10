@@ -10,10 +10,25 @@ use Illuminate\Support\Facades\Hash;
 class TeacherController extends Controller
 {
     // 1. Tampilkan Daftar Guru
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil user yang role-nya 'teacher'
-        $teachers = User::where('role', 'guru')->orderBy('name', 'asc')->get();
+        // Mulai query untuk mengambil user dengan role 'guru'
+        $query = User::where('role', 'guru');
+
+        // Jika ada input pencarian ('search')
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            
+            // Filter berdasarkan Nama atau NIP
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%')
+                  ->orWhere('nip_nis', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Eksekusi query dan urutkan berdasarkan nama
+        $teachers = $query->orderBy('name', 'asc')->get();
+        
         return view('admin.guru.index', compact('teachers'));
     }
 
@@ -31,6 +46,8 @@ class TeacherController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
             'nip' => 'nullable|string'
+        ], [
+            'email.unique' => 'Gagal! Email sudah terdaftar untuk data guru lain.'
         ]);
 
         User::create([
@@ -60,6 +77,8 @@ class TeacherController extends Controller
             // Validasi email unik KECUALI untuk user ini sendiri (biar gak error kalau email gak diganti)
             'email' => 'required|email|unique:users,email,'.$id,
             'nip' => 'nullable|string'
+        ], [
+            'email.unique' => 'Gagal! Email sudah terdaftar untuk data guru lain.'
         ]);
 
         $data = [

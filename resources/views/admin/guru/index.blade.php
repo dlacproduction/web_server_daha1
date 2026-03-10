@@ -4,6 +4,10 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Daftar Guru</h5>
+        <form action="{{ url('/admin/teachers') }}" method="GET" class="d-inline-flex">
+                <input type="text" name="search" class="form-control form-control-sm me-2" placeholder="Cari Nama / NIP" value="{{ request('search') }}">
+                <button type="submit" class="btn btn-secondary btn-sm">Cari</button>
+            </form>
         <a href="{{ url('/admin/teachers/create') }}" class="btn btn-primary btn-sm">+ Tambah Guru</a>
     </div>
     <div class="card-body">
@@ -18,7 +22,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($teachers as $index => $guru)
+                @forelse($teachers as $index => $guru)
                 <tr>
                     <td>{{ $index + 1 }}</td>
                     <td>{{ $guru->name }}</td>
@@ -36,7 +40,14 @@
                         </div>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center text-muted py-4">
+                        <i class="bi bi-search d-block mb-2 fs-3"></i>
+                        Data guru tidak ditemukan.
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

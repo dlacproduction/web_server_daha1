@@ -147,6 +147,10 @@
             <a href="{{ url('/admin/teachers') }}" class="{{ request()->is('admin/teachers*') ? 'active' : '' }}">
                 <i class="bi bi-person-badge"></i> DATA GURU
             </a>
+
+            <a href="{{ url('/admin/parents') }}" class="{{ request()->is('admin/parents*') ? 'active' : '' }}">
+                <i class="bi bi-person-heart"></i> AKUN WALI MURID
+            </a>
             
             <a href="{{ url('/admin/students') }}" class="{{ request()->is('admin/students*') ? 'active' : '' }}">
                 <i class="bi bi-people"></i> DATA SISWA
@@ -155,6 +159,11 @@
             <a href="{{ url('/admin/classes') }}" class="{{ request()->is('admin/classes*') ? 'active' : '' }}">
                 <i class="bi bi-building"></i> DATA KELAS
             </a>
+            
+            <a href="{{ url('/admin/promotions') }}" class="{{ request()->is('admin/promotions*') ? 'active' : '' }}">
+                <i class="bi bi-building"></i> KENAIKAN KELAS
+            </a>
+
 
             <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 0;">
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\SchoolClassController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\AcademicYearController;
+use App\Http\Controllers\Admin\PromotionController;
 
 Route::get('/', function () {
     return redirect('/admin/dashboard');
@@ -56,3 +57,17 @@ Route::get('/admin/academic-years/create', [AcademicYearController::class, 'crea
 Route::post('/admin/academic-years', [AcademicYearController::class, 'store']);
 Route::post('/admin/academic-years/{id}/activate', [AcademicYearController::class, 'setActive']); // Route khusus aktivasi
 Route::delete('/admin/academic-years/{id}', [AcademicYearController::class, 'destroy']);
+
+// routes/web.php
+use App\Http\Controllers\Admin\ParentAccountController;
+
+Route::prefix('admin')->group(function () {
+    Route::get('/parents', [ParentAccountController::class, 'index']);
+    Route::get('/parents/create', [ParentAccountController::class, 'create']);
+    Route::post('/parents', [ParentAccountController::class, 'store']);
+});
+
+Route::get('/admin/promotions', [PromotionController::class, 'index']);
+Route::post('/admin/promotions', [PromotionController::class, 'promote']);
+
+Route::get('/admin/get-students-by-class/{class_id}', [PromotionController::class, 'getStudentsByClass']);
