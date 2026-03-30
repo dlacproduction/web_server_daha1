@@ -22,7 +22,7 @@ class ParentAccountController extends Controller
             });
         }
 
-        $parents = $query->orderBy('name', 'asc')->paginate(10);
+        $parents = $query->orderBy('id', 'asc')->paginate(10);
         return view('admin.parents.index', compact('parents'));
     }
 

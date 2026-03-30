@@ -45,11 +45,17 @@ Route::delete('/admin/classes/{id}', [SchoolClassController::class, 'destroy']);
 Route::get('/admin/students', [StudentController::class, 'index']);
 Route::get('/admin/students/create', [StudentController::class, 'create']);
 Route::post('/admin/students', [StudentController::class, 'store']);
+Route::get('/admin/students/{id}/edit', [StudentController::class, 'edit']);
+Route::put('/admin/students/{id}', [StudentController::class, 'update']);
+Route::delete('/admin/students/{id}', [StudentController::class, 'destroy']);
 
 // Route CRUD Mapel
 Route::get('/admin/subjects', [SubjectController::class, 'index']);
 Route::get('/admin/subjects/create', [SubjectController::class, 'create']);
 Route::post('/admin/subjects', [SubjectController::class, 'store']);
+
+Route::get('/admin/subjects/{id}/edit', [App\Http\Controllers\Admin\SubjectController::class, 'edit']);
+Route::put('/admin/subjects/{id}', [App\Http\Controllers\Admin\SubjectController::class, 'update']);
 
 // CRUD Tahun Ajaran
 Route::get('/admin/academic-years', [AcademicYearController::class, 'index']);

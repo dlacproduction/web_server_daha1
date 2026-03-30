@@ -44,19 +44,25 @@
     </div>
 
     <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <span>Daftar Siswa</span>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="selectAll">
-                <label class="form-check-label" for="selectAll">Pilih Semua</label>
+        <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+            <div class="d-flex align-items-center gap-3">
+                <span class="fw-bold">Daftar Siswa</span>
+                <div class="form-check m-0">
+                    <input class="form-check-input" type="checkbox" id="selectAll">
+                    <label class="form-check-label" for="selectAll">Pilih Semua</label>
+                </div>
+            </div>
+            <div style="min-width: 250px;">
+                <input type="text" id="searchStudent" class="form-control form-control-sm" placeholder="Cari Nama atau NISN...">
             </div>
         </div>
-        <div class="card-body">
+        
+        <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
                         <tr>
-                            <th width="50">Pilih</th>
+                            <th width="50" class="ps-3">Pilih</th>
                             <th>NISN</th>
                             <th>Nama Siswa</th>
                             <th>Kelas Saat Ini</th>
@@ -74,15 +80,20 @@
     document.getElementById('source_class').addEventListener('change', function() {
         const classId = this.value;
         const studentList = document.getElementById('student-list');
+        const searchInput = document.getElementById('searchStudent');
         
+        // Reset kolom pencarian setiap kali ganti kelas
+        searchInput.value = '';
+
         // Kosongkan tabel saat memuat data
-        studentList.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Memuat data siswa...</td></tr>';
+        studentList.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-4">Memuat data siswa...</td></tr>';
 
         if (!classId) {
-            studentList.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Silakan pilih kelas asal terlebih dahulu.</td></tr>';
+            studentList.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-4">Silakan pilih kelas asal terlebih dahulu.</td></tr>';
             return;
         }
 
+        // Ambil data dari server
         // Ambil data dari server
         fetch(`/admin/get-students-by-class/${classId}`)
             .then(response => response.json())
@@ -90,18 +101,21 @@
                 studentList.innerHTML = ''; // Bersihkan loading
                 
                 if (data.length === 0) {
-                    studentList.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Tidak ada siswa di kelas ini.</td></tr>';
+                    studentList.innerHTML = '<tr><td colspan="4" class="text-center text-danger py-4">Tidak ada siswa di kelas ini.</td></tr>';
                     return;
                 }
 
+                // === TAMBAHKAN BARIS INI UNTUK SORTING ASCENDING BERDASARKAN NAMA ===
+                data.sort((a, b) => a.name.localeCompare(b.name));
+
                 data.forEach(student => {
                     const row = `
-                        <tr>
-                            <td>
+                        <tr class="student-row">
+                            <td class="ps-3">
                                 <input type="checkbox" name="student_ids[]" value="${student.id}" class="form-check-input student-checkbox">
                             </td>
-                            <td>${student.nisn || '-'}</td>
-                            <td class="fw-medium">${student.name}</td>
+                            <td class="student-nisn">${student.nis || '-'}</td>
+                            <td class="fw-medium student-name">${student.name}</td>
                             <td><span class="badge bg-light text-dark border">${this.options[this.selectedIndex].text}</span></td>
                         </tr>
                     `;
@@ -110,14 +124,34 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                studentList.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Gagal mengambil data.</td></tr>';
+                studentList.innerHTML = '<tr><td colspan="4" class="text-center text-danger py-4">Gagal mengambil data.</td></tr>';
             });
     });
 
     // Fitur Pilih Semua
     document.getElementById('selectAll').addEventListener('click', function() {
-        const checkboxes = document.querySelectorAll('.student-checkbox');
-        checkboxes.forEach(cb => cb.checked = this.checked);
+        // Hanya centang baris yang SEDANG DITAMPILKAN (tidak disembunyikan oleh pencarian)
+        const visibleCheckboxes = document.querySelectorAll('.student-row:not([style*="display: none"]) .student-checkbox');
+        visibleCheckboxes.forEach(cb => cb.checked = this.checked);
+    });
+
+    // Fitur Live Search (Vanilla JS)
+    document.getElementById('searchStudent').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#student-list .student-row');
+
+        rows.forEach(row => {
+            // Ambil teks NISN dan Nama dari dalam baris tersebut
+            const nisn = row.querySelector('.student-nis').textContent.toLowerCase();
+            const name = row.querySelector('.student-name').textContent.toLowerCase();
+
+            // Jika kata kunci cocok dengan Nama atau NISN, tampilkan. Jika tidak, sembunyikan.
+            if (nisn.includes(searchValue) || name.includes(searchValue)) {
+                row.style.display = ''; // Reset display
+            } else {
+                row.style.display = 'none'; // Sembunyikan
+            }
+        });
     });
 </script>
 @endsection

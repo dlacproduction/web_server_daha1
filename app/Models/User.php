@@ -53,4 +53,9 @@ class User extends Authenticatable
         // Pastikan foreign key di tabel students adalah 'parent_id'
         return $this->hasMany(Student::class, 'parent_id');
     }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'subject_user', 'user_id', 'subject_id');
+    }
 }

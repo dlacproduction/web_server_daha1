@@ -8,6 +8,9 @@
             <form action="{{ url('/admin/students') }}" method="GET" class="d-inline-flex">
                 <input type="text" name="search" class="form-control form-control-sm me-2" placeholder="Cari Nama / NIS..." value="{{ request('search') }}">
                 <button type="submit" class="btn btn-secondary btn-sm">Cari</button>
+                @if(request('search'))
+                    <a href="{{ url('/admin/students') }}" class="btn btn-outline-danger btn-sm ms-1">Reset</a>
+                @endif
             </form>
             <a href="{{ url('/admin/students/create') }}" class="btn btn-primary btn-sm ms-2">+ Tambah Siswa</a>
         </div>
@@ -18,9 +21,9 @@
                 <tr>
                     <th>NIS</th>
                     <th>Nama Siswa</th>
-                    <th>Kelas</th>
+                    <th class="text-center">L/P</th> <th>Kelas</th>
                     <th>Wali Murid</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,22 +31,37 @@
                 <tr>
                     <td>{{ $student->nis }}</td>
                     <td>{{ $student->name }}</td>
+                    
+                    <td class="text-center">{{ $student->gender }}</td>
+
                     <td><span class="badge bg-info">{{ $student->schoolClass->name ?? 'Belum ada' }}</span></td>
                     <td>{{ $student->parent->name ?? '-' }}</td>
                     <td>
-                        <button class="btn btn-sm btn-warning">Edit</button>
+                        <div class="d-flex gap-2 justify-content-center">
+                            <a href="{{ url('/admin/students/' . $student->id . '/edit') }}" class="btn btn-sm btn-warning">Edit</a>
+                            
+                            <form action="{{ url('/admin/students/' . $student->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus siswa ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center text-muted">Belum ada data siswa.</td>
+                    <td colspan="6" class="text-center text-muted">Belum ada data siswa.</td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
-        
-        <div class="mt-3">
-            {{ $students->links() }} 
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="small text-muted">
+                Menampilkan {{ $students->firstItem() ?? 0 }} sampai {{ $students->lastItem() ?? 0 }} dari {{ $students->total() }} data
+            </div>
+            <div>
+                {{ $students->withQueryString()->links('pagination::bootstrap-5') }}
+            </div>
         </div>
     </div>
 </div>
