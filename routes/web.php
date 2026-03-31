@@ -56,6 +56,7 @@ Route::post('/admin/subjects', [SubjectController::class, 'store']);
 
 Route::get('/admin/subjects/{id}/edit', [App\Http\Controllers\Admin\SubjectController::class, 'edit']);
 Route::put('/admin/subjects/{id}', [App\Http\Controllers\Admin\SubjectController::class, 'update']);
+Route::delete('/admin/subjects/{id}', [\App\Http\Controllers\Admin\SubjectController::class, 'destroy']);
 
 // CRUD Tahun Ajaran
 Route::get('/admin/academic-years', [AcademicYearController::class, 'index']);

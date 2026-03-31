@@ -9,6 +9,10 @@
         <form action="{{ url('/admin/subjects') }}" method="POST">
             @csrf
             <div class="mb-3">
+                <label class="form-label fw-bold">Kode Mapel</label>
+                <input type="text" name="kode_mapel" class="form-control @error('kode_mapel') is-invalid @enderror" value="{{ old('kode_mapel', $subject->kode_mapel ?? '') }}" placeholder="Contoh: MAT, IPA, BING" required>
+            </div>
+            <div class="mb-3">
                 <label class="form-label">Nama Mata Pelajaran</label>
                 <input type="text" name="name" class="form-control" required placeholder="Contoh: Matematika, Bahasa Jawa">
             </div>

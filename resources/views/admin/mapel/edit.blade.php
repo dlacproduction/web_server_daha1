@@ -17,6 +17,11 @@
                 @method('PUT')
                 
                 <div class="mb-3">
+                    <label class="form-label fw-bold">Kode Mapel</label>
+                    <input type="text" name="kode_mapel" class="form-control @error('kode_mapel') is-invalid @enderror" value="{{ old('kode_mapel', $subject->kode_mapel ?? '') }}" placeholder="Contoh: MAT, IPA, BING" required>
+                </div>
+
+                <div class="mb-3">
                     <label class="form-label fw-bold">Nama Mata Pelajaran</label>
                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $subject->name) }}" placeholder="Contoh: Matematika" required>
                     @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
