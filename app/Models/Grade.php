@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Grade extends Model
 {
     // Tambahkan daftar kolom yang boleh diisi di sini
+    use HasFactory;
+
+    // INI KUNCI UTAMANYA: Izinkan Laravel mengisi kolom-kolom ini
     protected $fillable = [
         'student_id',
         'subject_id',
         'academic_year_id',
-        'teacher_id',
-        'semester',
-        'assignment_score',
-        'mid_exam_score',
-        'final_exam_score',
-        'final_score',
-        'description'
+        'type',
+        'score',
+        'description',
     ];
 
     // Relasi ke Siswa (Opsional, tapi bagus untuk nanti)
