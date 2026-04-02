@@ -82,3 +82,13 @@ Route::get('/admin/promotions', [PromotionController::class, 'index']);
 Route::post('/admin/promotions', [PromotionController::class, 'promote']);
 
 Route::get('/admin/get-students-by-class/{class_id}', [PromotionController::class, 'getStudentsByClass']);
+
+// routes jadwal
+Route::get('/admin/jadwal', [\App\Http\Controllers\Admin\ScheduleController::class, 'index']);
+Route::get('/admin/jadwal/create', [\App\Http\Controllers\Admin\ScheduleController::class, 'create']);
+Route::post('/admin/jadwal', [\App\Http\Controllers\Admin\ScheduleController::class, 'store']);
+Route::get('/admin/jadwal/{id}/edit', [\App\Http\Controllers\Admin\ScheduleController::class, 'edit']);
+Route::put('/admin/jadwal/{id}', [\App\Http\Controllers\Admin\ScheduleController::class, 'update']);
+Route::delete('/admin/jadwal/{id}', [\App\Http\Controllers\Admin\ScheduleController::class, 'destroy']);
+// route download jadwal
+Route::get('/admin/jadwal/pdf', [\App\Http\Controllers\Admin\ScheduleController::class, 'downloadPdf']);

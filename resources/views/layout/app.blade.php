@@ -176,7 +176,7 @@
                 <i class="bi bi-book"></i> MATA PELAJARAN
             </a>
 
-            <a href="{{ url('/admin/teaching-assignments') }}" class="{{ request()->is('admin/teaching-assignments*') ? 'active' : '' }}">
+            <a href="{{ url('/admin/jadwal') }}" class="{{ request()->is('admin/jadwal*') ? 'active' : '' }}">
                 <i class="bi bi-calendar-week"></i> JADWAL PELAJARAN
             </a>
 
