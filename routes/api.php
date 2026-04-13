@@ -19,21 +19,23 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    Route::get('/classes', [\App\Http\Controllers\Api\TeacherController::class, 'getClasses']);
-    Route::get('/students/{class_id}', [\App\Http\Controllers\Api\TeacherController::class, 'getStudents']);
+    // Ubah menjadi seperti ini:
+Route::get('/kelas', [\App\Http\Controllers\Api\TeacherController::class, 'getClasses']);
+Route::get('/students/{class_id}', [\App\Http\Controllers\Api\TeacherController::class, 'getStudents']);
 
-    Route::get('/kelas/{class_id}/siswa', [AttendanceController::class, 'getStudentsByClass']);
-    Route::post('/absensi/simpan', [AttendanceController::class, 'store']);
-    
-    Route::get('/subjects', [\App\Http\Controllers\Api\TeacherController::class, 'getSubjects']);
-    Route::post('/nilai/simpan', [GradeController::class, 'store']);
-    Route::get('/nilai/ambil', [GradeController::class, 'getExistingGrades']);
+Route::get('/kelas/{class_id}/siswa', [AttendanceController::class, 'getStudentsByClass']);
+Route::post('/absensi/simpan', [AttendanceController::class, 'store']);
+Route::get('/absensi/ambil', [AttendanceController::class, 'getExistingAttendance']);
 
-    Route::prefix('parent')->group(function () {
-        Route::get('/children', [ParentController::class, 'getChildren']); // Lihat list anak
-        Route::get('/grades/{student_id}', [ParentController::class, 'getStudentGrades']); // Lihat nilai
-        Route::get('/attendances/{student_id}', [ParentController::class, 'getStudentAttendances']); // Lihat absen
+Route::get('/subjects', [\App\Http\Controllers\Api\TeacherController::class, 'getSubjects']);
+Route::post('/nilai/simpan', [GradeController::class, 'store']);
+Route::get('/nilai/ambil', [GradeController::class, 'getExistingGrades']);
+
+Route::prefix('parent')->group(function () {
+    Route::get('/children', [ParentController::class, 'getChildren']); // Lihat list anak
+    Route::get('/grades/{student_id}', [ParentController::class, 'getStudentGrades']); // Lihat nilai
+    Route::get('/attendances/{student_id}', [ParentController::class, 'getStudentAttendances']); // Lihat absen
     });
 
-    Route::get('/jadwal-guru', [ScheduleController::class, 'jadwalGuru']);
+Route::get('/jadwal-guru', [ScheduleController::class, 'jadwalGuru']);
 });

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\PromotionController;
+use Maatwebsite\Excel\Facadas\Excel;
 
 Route::get('/', function () {
     return redirect('/admin/dashboard');
@@ -48,6 +49,7 @@ Route::post('/admin/students', [StudentController::class, 'store']);
 Route::get('/admin/students/{id}/edit', [StudentController::class, 'edit']);
 Route::put('/admin/students/{id}', [StudentController::class, 'update']);
 Route::delete('/admin/students/{id}', [StudentController::class, 'destroy']);
+Route::get('/admin/students/export', [App\Http\Controllers\Admin\StudentController::class, 'exportExcel']);
 
 // Route CRUD Mapel
 Route::get('/admin/subjects', [SubjectController::class, 'index']);
