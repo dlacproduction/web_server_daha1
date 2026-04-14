@@ -184,11 +184,11 @@
 
             <small class="text-muted px-4 fw-bold" style="font-size: 0.65rem;">LAPORAN</small>
 
-            <a href="#" class="">
+            <a href="{{ url('/admin/laporan/presensi') }}" class="">
                 <i class="bi bi-printer"></i> CETAK PRESENSI
             </a>
 
-            <a href="#" class="">
+            <a href="{{ url('/admin/laporan/rapor') }}" class="">
                 <i class="bi bi-file-earmark-pdf"></i> CETAK RAPOR
             </a>
 

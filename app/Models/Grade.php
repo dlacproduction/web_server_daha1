@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grade extends Model
 {
-    // Tambahkan daftar kolom yang boleh diisi di sini
     use HasFactory;
 
     // INI KUNCI UTAMANYA: Izinkan Laravel mengisi kolom-kolom ini
@@ -20,15 +19,22 @@ class Grade extends Model
         'description',
     ];
 
-    // Relasi ke Siswa (Opsional, tapi bagus untuk nanti)
+    // Relasi ke Siswa
     public function student()
     {
         return $this->belongsTo(Student::class);
     }
 
-    // Relasi ke Mapel (Opsional)
+    // Relasi ke Mapel
     public function subject()
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    // --- INI YANG BARU & WAJIB DITAMBAHKAN ---
+    // Relasi ke Tahun Ajaran
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class, 'academic_year_id');
     }
 }

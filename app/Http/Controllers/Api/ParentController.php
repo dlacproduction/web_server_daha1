@@ -75,7 +75,7 @@ class ParentController extends Controller
         // Ambil absensi 30 hari terakhir
         $attendances = Attendance::where('student_id', $student_id)
                                 ->orderBy('date', 'desc')
-                                ->limit(30)
+                                ->limit(185)
                                 ->get();
 
         return response()->json([

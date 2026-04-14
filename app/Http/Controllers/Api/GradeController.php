@@ -11,20 +11,25 @@ class GradeController extends Controller
 {
     public function store(Request $request)
     {
-        // 1. Validasi data yang masuk dari Flutter
+        // 1. Validasi data
         $request->validate([
             'subject_id' => 'required',
             'type'       => 'required|in:UH1,UH2,UTS,UAS,Tugas',
-            'nilai_data' => 'required|array', // Data nilai siswa
+            'nilai_data' => 'required|array', 
         ]);
 
-        // 2. Cari Tahun Ajaran yang aktif (Jika belum ada fitur aktif, kita ambil data terbaru)
-        $tahunAjaran = AcademicYear::latest()->first();
+        // 2. PERBAIKAN: Cari Tahun Ajaran yang berstatus AKTIF (is_active = 1)
+        $tahunAjaran = AcademicYear::where('is_active', 1)->first();
+        
+        // Fallback: Jika tidak ada yang diset aktif, baru ambil yang terbaru
+        if (!$tahunAjaran) {
+            $tahunAjaran = AcademicYear::latest()->first();
+        }
+        
         $academic_year_id = $tahunAjaran ? $tahunAjaran->id : 1; 
 
-        // 3. Simpan nilai ke database (Gunakan updateOrCreate agar jika diedit tidak ganda)
+        // 3. Simpan nilai
         foreach ($request->nilai_data as $data) {
-            // Abaikan jika guru mengosongkan kolom nilai untuk anak tertentu
             if ($data['score'] === null || $data['score'] === '') {
                 continue; 
             }
@@ -45,7 +50,7 @@ class GradeController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Data nilai berhasil disimpan!'
+            'message' => 'Data nilai berhasil disimpan di Tahun Ajaran: ' . $tahunAjaran->year
         ]);
     }
 
@@ -57,10 +62,10 @@ class GradeController extends Controller
             'type'       => 'required',
         ]);
 
-        $tahunAjaran = AcademicYear::latest()->first();
+        // PERBAIKAN: Gunakan logika yang sama (Cari yang is_active = 1)
+        $tahunAjaran = AcademicYear::where('is_active', 1)->first() ?? AcademicYear::latest()->first();
         $academic_year_id = $tahunAjaran ? $tahunAjaran->id : 1;
 
-        // Ambil nilai yang sudah ada berdasarkan kriteria
         $grades = Grade::where('subject_id', $request->subject_id)
             ->where('type', $request->type)
             ->where('academic_year_id', $academic_year_id)

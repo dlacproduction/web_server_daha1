@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\PromotionController;
 use Maatwebsite\Excel\Facadas\Excel;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return redirect('/admin/dashboard');
@@ -94,3 +95,9 @@ Route::put('/admin/jadwal/{id}', [\App\Http\Controllers\Admin\ScheduleController
 Route::delete('/admin/jadwal/{id}', [\App\Http\Controllers\Admin\ScheduleController::class, 'destroy']);
 // route download jadwal
 Route::get('/admin/jadwal/pdf', [\App\Http\Controllers\Admin\ScheduleController::class, 'downloadPdf']);
+
+// routes laporan
+Route::get('/admin/laporan/presensi', [\App\Http\Controllers\ReportController::class, 'presensiIndex']);
+Route::get('/admin/laporan/presensi/cetak', [ReportController::class, 'presensiCetak']);
+Route::get('/admin/laporan/rapor', [\App\Http\Controllers\ReportController::class, 'raporIndex']);
+Route::get('/admin/laporan/rapor/cetak', [ReportController::class, 'raporCetak']);
