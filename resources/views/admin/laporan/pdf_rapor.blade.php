@@ -45,22 +45,23 @@
             <div class="info-right">
                 <table class="info-table">
                     <tr>
-                        <td width="100">KELAS</td>
-                        <td style="color: blue;">: {{ $kelas->name }}</td>
+                        <td width="120">KELAS</td>
+                        {{-- Hapus style="color: blue;" agar warnanya hitam seragam --}}
+                        <td>: <strong>{{ $kelas->name }}</strong></td> 
                     </tr>
                     <tr>
                         <td>TAHUN AJARAN</td>
-                        <td style="color: blue;">: {{ $tapel->year }}</td>
+                        <td>: {{ $tapel->year }}</td>
                     </tr>
                     <tr>
                         <td>SEMESTER</td>
-                        <td style="color: blue;">: {{ $tapel->semester }}</td>
+                        <td>: {{ $tapel->semester }}</td>
                     </tr>
                 </table>
             </div>
             <div class="clear"></div>
         </div>
-
+        
         <table class="grade-table">
             <thead>
                 <tr>

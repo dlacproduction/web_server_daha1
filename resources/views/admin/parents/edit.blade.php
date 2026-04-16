@@ -31,7 +31,12 @@
 
                 <div class="mb-4">
                     <label class="form-label fw-bold">Password Baru (Kosongkan jika tidak ingin ganti)</label>
-                    <input type="password" name="password" class="form-control">
+                    <div class="input-group">
+                        <input type="password" name="password" id="passwordInput" class="form-control">
+                        <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                            <i class="bi bi-eye" id="toggleIcon"></i>
+                        </button>    
+                    </div>
                     <small class="text-muted">Minimal 8 karakter.</small>
                 </div>
 
@@ -43,4 +48,27 @@
         </div>
     </div>
 </div>
+
+<script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#passwordInput');
+    const toggleIcon = document.querySelector('#toggleIcon');
+
+    togglePassword.addEventListener('click', function (e) {
+        // 1. Cek tipe atribut saat ini (password atau text)
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        
+        // 2. Ubah tipe atributnya
+        passwordInput.setAttribute('type', type);
+
+        // 3. Ubah Ikon (Mata terbuka / Mata dicoret)
+        if (type === 'text') {
+            toggleIcon.classList.remove('bi-eye');
+            toggleIcon.classList.add('bi-eye-slash'); // Mata dicoret
+        } else {
+            toggleIcon.classList.remove('bi-eye-slash');
+            toggleIcon.classList.add('bi-eye'); // Mata biasa
+        }
+    });
+</script>
 @endsection

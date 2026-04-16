@@ -64,7 +64,7 @@ class ReportController extends Controller
             'attendances' => $attendances
         ];
 
-        $pdf = Pdf::loadView('admin.laporan.pdf_presensi', $data)->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('admin.laporan.pdf_presensi', $data)->setPaper('a4', 'potrait');
         return $pdf->stream('Laporan_Presensi_'.$kelas->name.'.pdf');
     }
 

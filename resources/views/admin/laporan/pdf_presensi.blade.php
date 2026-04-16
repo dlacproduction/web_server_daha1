@@ -3,11 +3,27 @@
 <head>
     <title>Laporan Presensi</title>
     <style>
+        @page {
+            margin: 25px 35px; /* Margin atas-bawah 25px, kiri-kanan 35px */
+        }
         body { font-family: sans-serif; font-size: 11px; }
         .header { text-align: center; margin-bottom: 20px; text-transform: uppercase; }
         table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 5px; text-align: center; }
+        th, td { border: 1px solid black; padding: 3px 4px; text-align: center; word-wrap: break-word;}
         .text-left { text-align: left; }
+        .footer-sign {
+            margin-top: 30px;
+            width: 100%;
+        }
+        .sign-table {
+            width: 100%;
+            border: none;
+        }
+        .sign-table td {
+            border: none;
+            text-align: center;
+            padding: 0;
+        }
     </style>
 </head>
 <body>
@@ -47,8 +63,22 @@
                 <td>{{ $attendances->where('student_id', $s->id)->where('status', 'I')->count() }}</td>
                 <td>{{ $attendances->where('student_id', $s->id)->where('status', 'A')->count() }}</td>
             </tr>
+            
             @endforeach
         </tbody>
     </table>
+    <div class="footer-sign">
+        <table class="sign-table">
+            <tr>
+                <td width="60%"></td>
+                <td width="40%">
+                    <p>Kediri, .......................................</p>
+                    <p style="margin-top: 5px;">Guru Mata Pelajaran</p>
+                    <br><br><br>
+                    <p>(................................................)</p>
+                </td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
