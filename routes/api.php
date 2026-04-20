@@ -11,13 +11,18 @@ use App\Http\Controllers\Api\GradeController;
 // URL Login: http://localhost:8000/api/login
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::post('/register-parent', [App\Http\Controllers\Api\AuthController::class, 'registerParent']);
+
 // Group Rute yang butuh Token (Harus Login dulu)
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/claim-child', [AuthController::class, 'claimChild']);
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
 
     // Ubah menjadi seperti ini:
 Route::get('/kelas', [\App\Http\Controllers\Api\TeacherController::class, 'getClasses']);
@@ -37,5 +42,8 @@ Route::prefix('parent')->group(function () {
     Route::get('/attendances/{student_id}', [ParentController::class, 'getStudentAttendances']); // Lihat absen
     });
 
+
+
 Route::get('/jadwal-guru', [ScheduleController::class, 'jadwalGuru']);
 });
+

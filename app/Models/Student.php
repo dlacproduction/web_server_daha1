@@ -14,7 +14,8 @@ class Student extends Model
         'name',
         'gender',
         'class_id',
-        'parent_id'
+        'parent_id',
+        'token'
     ];
 
     // Relasi: Siswa milik satu Kelas

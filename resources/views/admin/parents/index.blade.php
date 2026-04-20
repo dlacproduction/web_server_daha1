@@ -27,8 +27,8 @@
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Email</th>
-                            <th>No. HP</th>
+                            <th>Username</th>
+                            <!-- <th>No. HP</th> -->
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -37,7 +37,7 @@
                         <tr>
                             <td>{{ $parent->name }}</td>
                             <td>{{ $parent->email }}</td>
-                            <td>{{ $parent->phone_number ?? '-' }}</td>
+                            <!-- <td>{{ $parent->phone_number ?? '-' }}</td> -->
                             <td>
                                 <div class="d-flex gap-2">
                                     <a href="{{ url('/admin/parents/'.$parent->id.'/edit') }}" class="btn btn-sm btn-warning">

@@ -50,7 +50,7 @@
                     @error('class_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
 
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label class="form-label fw-bold">Pilih Akun Wali Murid (Orang Tua)</label>
                     <select name="parent_id" id="select2-parent" class="form-select @error('parent_id') is-invalid @enderror" required>
                         <option value="">-- Cari dan Pilih Akun Wali Murid --</option>
@@ -61,7 +61,7 @@
                         @endforeach
                     </select>
                     @error('parent_id') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
-                </div>
+                </div> -->
 
                 <div class="d-flex justify-content-between mt-4">
                     <a href="{{ url('/admin/students') }}" class="btn btn-secondary px-4">Batal</a>

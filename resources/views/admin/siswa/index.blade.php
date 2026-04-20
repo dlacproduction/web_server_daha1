@@ -29,6 +29,9 @@
             </form>
 
             <a href="{{ url('/admin/students/create') }}" class="btn btn-primary btn-sm">+ Tambah Siswa</a>
+            <a href="{{ url('/admin/students/print-tokens') }}?class_id={{ request('class_id') }}" target="_blank" class="btn btn-primary fw-bold">
+                <i class="bi bi-printer-fill me-1"></i> Cetak Kartu Token
+            </a>
         </div>
     </div>
     <div class="card-body">
